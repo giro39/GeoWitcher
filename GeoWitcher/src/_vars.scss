@@ -1,0 +1,9 @@
+:root {
+    --text-1: #fff;
+    --text-2: #c0c1c1;
+    --text-3: #aaa;
+}
+
+$text-1: var(--text-1);
+$text-2: var(--text-2);
+$text-3: var(--text-3);
