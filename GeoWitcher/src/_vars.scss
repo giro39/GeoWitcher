@@ -2,8 +2,13 @@
     --text-1: #fff;
     --text-2: #c0c1c1;
     --text-3: #aaa;
+    --accent: #dc0000;
+    --confirm-gradient: linear-gradient(0deg, rgba(78, 156, 66, 1) 0%, rgba(147, 228, 80, 1) 100%);
 }
 
 $text-1: var(--text-1);
 $text-2: var(--text-2);
 $text-3: var(--text-3);
+$accent: var(--accent);
+
+$confirmGradient: var(--confirm-gradient);
