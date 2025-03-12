@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styles from "./Map.module.scss";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
@@ -28,12 +28,13 @@ const Map: React.FC<MapProps> = ({ location, rows, cols }) => {
 
     // Handle guess section
     const [guessed, setGuessed] = useState<boolean>(false);
-    const handleGuess = () => {
-        if (coordinates) {
+
+    const handleGuess = useCallback(() => {
+        if (coordinates && !guessed) {
             console.log("Guess submitted at:", coordinates);
             setGuessed(true);
         }
-    }
+    }, [coordinates, guessed]);
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
@@ -44,8 +45,7 @@ const Map: React.FC<MapProps> = ({ location, rows, cols }) => {
 
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
-        // eslint-disable-next-line react-hooks/exhaustive-deps  
-    }, [coordinates]);
+    }, [coordinates, handleGuess]);
 
     // Returned TSX
     return (
