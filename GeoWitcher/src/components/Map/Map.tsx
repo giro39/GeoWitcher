@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styles from "./Map.module.scss";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
+import Marker from "../Marker/Marker";
+
 interface MapProps {
     location: string;
     rows: number;
@@ -17,12 +19,6 @@ const Map: React.FC<MapProps> = ({ location, rows, cols }) => {
         const xPercentage = ((event.clientX - rect.left) / rect.width) * 100;
         const yPercentage = ((event.clientY - rect.top) / rect.height) * 100;
 
-        // const tileWidth = rect.width / cols;
-        // const tileHeight = rect.height / rows;
-        // const col = Math.floor((event.clientX - rect.left) / tileWidth);
-        // const row = Math.floor((event.clientY - rect.top) / tileHeight);
-
-        // console.log(`Clicked on tile: row ${row}, col ${col}`);
         console.log(`Percentage: X=${xPercentage}%, Y=${yPercentage}%`);
 
         setCoordinates({ x: xPercentage, y: yPercentage });
@@ -30,22 +26,8 @@ const Map: React.FC<MapProps> = ({ location, rows, cols }) => {
 
     return (
         <div className={styles.container}>
-            {/* <div>
-                <p>
-                    {coordinates && `Percentage: X: ${coordinates.x}%, Y: ${coordinates.y}%`}
-                </p>
-            </div> */}
-            <TransformWrapper
-                maxScale={2.5}
-                minScale={0.5}
-                centerOnInit
-            >
-                <TransformComponent
-                    wrapperStyle={{
-                        width: "100%",
-                        height: "100%",
-                    }}
-                >
+            <TransformWrapper maxScale={2.5} minScale={0.5} centerOnInit>
+                <TransformComponent wrapperStyle={{ width: "100%", height: "100%", }}>
                     <div className={styles.mapWrapper} onClick={handleClick}>
                         {Array.from({ length: rows }).map((_, row) => (
                             <div key={row} className={styles.row}>
@@ -61,19 +43,14 @@ const Map: React.FC<MapProps> = ({ location, rows, cols }) => {
                         ))}
                     </div>
                     {coordinates && (
-                        <div
-                            className={styles.marker}
-                            style={{
-                                left: `${coordinates.x}%`,
-                                top: `${coordinates.y}%`,
-                            }}
-                        />
+                        <Marker x={coordinates.x} y={coordinates.y} />
                     )}
                 </TransformComponent>
             </TransformWrapper>
             <button className={`${styles.button} ${coordinates ? styles.active : ""} `}>
                 {!coordinates ? "PLACE YOUR PIN ON THE MAP" : "GUESS"}
             </button>
+            <p>Percentage: X={coordinates?.x}%, Y={coordinates?.y}%</p>
         </div>
     );
 };
