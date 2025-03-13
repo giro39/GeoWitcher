@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
-import styles from "./Map.module.scss";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 import Marker from "../Marker/Marker";
+
+import styles from "./Map.module.scss";
 
 interface MapProps {
     location: string;
