@@ -1,12 +1,12 @@
-import Map from './components/Map/Map'
-
+// import Map from './components/Map/Map'
+import Round from './gamePages/Round/Round'
 import './App.scss'
 
 function App() {
     return (
         <>
             {/* <h1>Vite + React</h1> */}
-            <Map location="white_orchard" rows={4} cols={5} />
+            <Round />
         </>
     )
 }
