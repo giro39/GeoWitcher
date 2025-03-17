@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import GameHud from "./GameHud/GameHUD";
 import LocationImage from "./LocationImage/LocationImage";
 import Map from "../../components/Map/Map";
+import Compass from "./Compass/Compass";
 
 import styles from "./Round.module.scss";
 
@@ -72,6 +73,7 @@ const Round: React.FC = () => {
                 player2={gameData.player2}
                 scorePlayer2={gameData.scorePlayer2}
             />
+            <Compass offset={gameData.currentLocation.compassOffset} />
             <Map location={gameData.currentLocation.name} rows={4} cols={5} />
             {/* not sure about the rows and cols, have to rethink using that */}
         </div>
