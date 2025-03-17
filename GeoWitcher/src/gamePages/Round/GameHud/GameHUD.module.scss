@@ -36,7 +36,6 @@
 
 .players {
     display: flex;
-
     gap: 1rem;
 }
 
@@ -49,6 +48,7 @@
 
 .playerName {
     color: #d9d5ff;
+    font-size: 1rem;
 }
 
 .playerScore {

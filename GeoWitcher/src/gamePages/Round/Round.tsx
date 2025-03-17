@@ -62,6 +62,7 @@ const Round: React.FC = () => {
 
     return (
         <div className={styles.container}>
+            <LocationImage imageUrl={gameData.currentLocation.imageUrl} />
             <GameHud
                 mode={gameData.mode}
                 map={gameData.map}
@@ -71,7 +72,6 @@ const Round: React.FC = () => {
                 player2={gameData.player2}
                 scorePlayer2={gameData.scorePlayer2}
             />
-            <LocationImage imageUrl={gameData.currentLocation.imageUrl} />
             <Map location={gameData.currentLocation.name} rows={4} cols={5} />
             {/* not sure about the rows and cols, have to rethink using that */}
         </div>
