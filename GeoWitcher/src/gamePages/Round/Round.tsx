@@ -59,7 +59,7 @@ const Round: React.FC = () => {
         fetchGameData();
     }, []);
 
-    if (!gameData) return <p>Loading...</p>
+    if (!gameData) return <p>Loading...</p>;
 
     return (
         <div className={styles.container}>
@@ -77,7 +77,7 @@ const Round: React.FC = () => {
             <Map location={gameData.currentLocation.name} rows={4} cols={5} />
             {/* not sure about the rows and cols, have to rethink using that */}
         </div>
-    )
-}
+    );
+};
 
 export default Round;

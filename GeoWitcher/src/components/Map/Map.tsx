@@ -1,20 +1,17 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
-import { MdArrowOutward } from "react-icons/md";
-import { TiPin } from "react-icons/ti";
-
 import Marker from "../Marker/Marker";
+import MapButtons from "./MapButtons/MapButtons";
 
 import styles from "./Map.module.scss";
+import { MapSize } from "./mapTypes";
 
 interface MapProps {
     location: string;
     rows: number;
     cols: number;
 }
-
-type MapSize = "small" | "medium" | "large";
 
 const Map: React.FC<MapProps> = ({ location, rows, cols }) => {
     const [coordinates, setCoordinates] = useState<{
@@ -24,20 +21,28 @@ const Map: React.FC<MapProps> = ({ location, rows, cols }) => {
     const [guessed, setGuessed] = useState<boolean>(false);
     const [isMapVisible, setIsMapVisible] = useState<boolean>(false);
     const [mapSize, setMapSize] = useState<MapSize>("small");
+    const [isPinned, setIsPinned] = useState<boolean>(false);
+    const [_, setZoom] = useState<number>(1);
+    const transformWrapperRef = useRef<any>(null);
 
+    // Visibility of the map
     let visibilityTimeout: ReturnType<typeof setTimeout> | null = null;
 
     const handleMouseEnter = () => {
         if (visibilityTimeout) {
             clearTimeout(visibilityTimeout);
         }
-        setIsMapVisible(true);
+        if (!isPinned) {
+            setIsMapVisible(true);
+        }
     };
 
     const handleMouseLeave = () => {
-        visibilityTimeout = setTimeout(() => {
-            setIsMapVisible(false);
-        }, 1000);
+        if (!isPinned) {
+            visibilityTimeout = setTimeout(() => {
+                setIsMapVisible(false);
+            }, 800);
+        }
     };
 
     // Clicking on the map
@@ -81,7 +86,22 @@ const Map: React.FC<MapProps> = ({ location, rows, cols }) => {
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
             >
-                <TransformWrapper maxScale={2.5} minScale={0.5} centerOnInit>
+                <MapButtons
+                    mapSize={mapSize}
+                    setMapSize={setMapSize}
+                    transformWrapperRef={transformWrapperRef}
+                    isPinned={isPinned}
+                    setIsPinned={setIsPinned}
+                />
+                <TransformWrapper
+                    maxScale={2.5}
+                    minScale={0.5}
+                    centerOnInit
+                    onZoom={(zoomData) => {
+                        setZoom(zoomData.state.scale);
+                    }}
+                    ref={transformWrapperRef}
+                >
                     <TransformComponent
                         wrapperStyle={{ width: "100%", height: "100%" }}
                     >
