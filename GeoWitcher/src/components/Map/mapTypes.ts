@@ -1,1 +1,1 @@
-export type MapSize = "small" | "medium" | "large";
+export type MapSize = "small" | "medium" | "big" | "large";

@@ -21,18 +21,23 @@
 }
 
 .small {
-    width: 24rem;
-    height: 20rem;
-}
-
-.medium {
     width: 30rem;
     height: 25rem;
 }
 
-.large {
+.medium {
     width: 40rem;
     height: 32rem;
+}
+
+.big {
+    width: 50rem;
+    height: 40rem;
+}
+
+.large {
+    width: 60rem;
+    height: 48rem;
 }
 
 .hidden {

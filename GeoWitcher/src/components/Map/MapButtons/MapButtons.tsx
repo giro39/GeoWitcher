@@ -26,11 +26,13 @@ const MapButtons: React.FC<MapButtonsProps> = ({
 }) => {
     const onSizeUp = () => {
         if (mapSize === "small") setMapSize("medium");
-        else if (mapSize === "medium") setMapSize("large");
+        else if (mapSize === "medium") setMapSize("big");
+        else if (mapSize === "big") setMapSize("large");
     };
 
     const onSizeDown = () => {
-        if (mapSize === "large") setMapSize("medium");
+        if (mapSize === "large") setMapSize("big");
+        else if (mapSize === "big") setMapSize("medium");
         else if (mapSize === "medium") setMapSize("small");
     };
 
