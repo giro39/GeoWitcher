@@ -94,7 +94,7 @@ const Map: React.FC<MapProps> = ({ location, rows, cols }) => {
                     setIsPinned={setIsPinned}
                 />
                 <TransformWrapper
-                    maxScale={2.5}
+                    maxScale={3.5}
                     minScale={0.5}
                     centerOnInit
                     onZoom={(zoomData) => {
@@ -125,7 +125,7 @@ const Map: React.FC<MapProps> = ({ location, rows, cols }) => {
                             ))}
                         </div>
                         {coordinates && (
-                            <Marker x={coordinates.x} y={coordinates.y} />
+                            <Marker x={coordinates.x} y={coordinates.y} /> // as i have zoom state now, probably i can alter the size of the marker
                         )}
                     </TransformComponent>
                 </TransformWrapper>

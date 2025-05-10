@@ -7,28 +7,9 @@ import Compass from "./Compass/Compass";
 
 import styles from "./Round.module.scss";
 
-interface Coordinates {
-    x: number;
-    y: number;
-}
-
-interface LocationData {
-    name: string;
-    coordinates: Coordinates;
-    compassOffset: number;
-    imageUrl: string;
-}
-
-interface GameData {
-    mode: string;
-    map: string;
-    round: number;
-    player1: string;
-    scorePlayer1: number;
-    player2?: string;
-    scorePlayer2?: number;
-    currentLocation: LocationData;
-}
+// import { Coordinates } from "../../interfaces/interfaces";
+// import { LocationData } from "../../interfaces/interfaces";
+import { GameData } from "../../interfaces/interfaces";
 
 const Round: React.FC = () => {
     const [gameData, setGameData] = useState<GameData | null>(null);
@@ -47,7 +28,7 @@ const Round: React.FC = () => {
                 scorePlayer2: 4999,
                 currentLocation: {
                     name: "white_orchard",
-                    coordinates: { x: 18.2034, y: 9.2889 },
+                    coordinates: { x: 18.2034, y: 9.2889 }, // probably shouldn't drop coordinates
                     compassOffset: 15,
                     imageUrl: "/locations/white_orchard/19.png",
                 },
