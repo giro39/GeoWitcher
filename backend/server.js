@@ -6,10 +6,11 @@ const Database = require('better-sqlite3');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const JWT_SECRET = 'super_secret_i_wont_tell_you';
 
-
+app.use(cors());
 app.use(bodyParser.json());
 
 const db = require('./db');

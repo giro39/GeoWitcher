@@ -1,6 +1,6 @@
 import React from "react";
 
-import { RoundResultsData } from "../../interfaces/interfaces";
+import { RoundResultsData } from "../../../interfaces/interfaces";
 
 const RoundResults: React.FC<RoundResultsData> = () => {
     return (
