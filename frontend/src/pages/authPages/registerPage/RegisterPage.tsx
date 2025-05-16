@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Form from "../../../components/Form/Form";
 
+import styles from "./RegisterPage.module.scss";
 
 const RegisterPage: React.FC = () => {
     const [message, setMessage] = useState<string | null>(null);
@@ -25,7 +26,7 @@ const RegisterPage: React.FC = () => {
     };
 
     return (
-        <div>
+        <div className={styles.registerContainer}>
             <h2>Register</h2>
             <Form
                 fields={[

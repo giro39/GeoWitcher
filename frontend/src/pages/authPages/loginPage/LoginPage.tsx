@@ -1,17 +1,27 @@
 import { useState } from "react"
 import Form from "../../../components/Form/Form";
 
+import styles from "./LoginPage.module.scss";
 
 const LoginPage: React.FC = () => {
     const [message, setMessage] = useState<string | null>(null);
 
     const handleLogin = async (values: Record<string, string>) => {
         setMessage(null);
+
+        const loginValue = values.login;
+        const payload: Record<string, string> = { password: values.password };
+        if (loginValue.includes("@")) {
+            payload.email = loginValue;
+        } else {
+            payload.username = loginValue;
+        }
+
         try {
             const res = await fetch("http://localhost:3000/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(values),
+                body: JSON.stringify(payload),
             });
             const data = await res.json();
             if (res.ok) {
@@ -25,12 +35,11 @@ const LoginPage: React.FC = () => {
     };
 
     return (
-        <div>
+        <div className={styles.loginContainer}>
             <h2>Login</h2>
             <Form 
                 fields={[
-                    { name: "email", label: "Email", type: "email" },
-                    { name: "username", label: "Username", type: "text" },
+                    { name: "login", label: "Username or email", type: "text" },
                     { name: "password", label: "Password", type: "password" },
                 ]}
                 onSubmit={handleLogin}

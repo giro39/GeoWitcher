@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
-const Database = require('better-sqlite3');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const bodyParser = require('body-parser');
@@ -40,10 +39,14 @@ app.post('/login', async (req, res) => {
         return res.status(400).json({ error: 'Email or username and password required.' });
     }
     try {
-        const stmt = db.prepare(
-            'SELECT * FROM users WHERE email = ? OR username = ?'
-        );
-        const user = stmt.get(email || username, email || username);
+        let user;
+        if (email) {
+            const stmt = db.prepare('SELECT * FROM users WHERE email = ?');
+            user = stmt.get(email);
+        } else {
+            const stmt = db.prepare('SELECT * FROM users WHERE username = ?');
+            user = stmt.get(username);
+        }
         if (!user) {
             return res.status(401).json({ error: 'Invalid credentials.' });
         }
