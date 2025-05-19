@@ -54,7 +54,20 @@ app.get('/verify', (req, res) => {
         return res.status(400).send('Invalid or expired verification token.');
     }
     db.prepare('UPDATE users SET is_verified = 1, verification_token = NULL WHERE id = ?').run(user.id);
-    res.send('Email verified successfully! You can now log in.');
+
+    const tokenAfterVerify = jwt.sign(
+        { id: user.id, email: user.email, username: user.username },
+        JWT_SECRET,
+        { expiresIn: '1h' }
+    );
+        res.cookie('token', tokenAfterVerify, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        // sameSite: 'lax',
+    });
+
+    res.redirect(`${process.env.FRONTEND_URL}/`);
+
 });
 
 app.post('/login', async (req, res) => {
@@ -88,8 +101,8 @@ app.post('/login', async (req, res) => {
         );
         res.cookie('token', token, { 
             httpOnly: true,
-            // sameSite: 'lax',
             secure: process.env.NODE_ENV === 'production',
+            // sameSite: 'lax',
         });
         res.json({ token });
     } catch (err) {
