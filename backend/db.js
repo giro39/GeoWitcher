@@ -7,8 +7,11 @@ db.prepare(`
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         email TEXT UNIQUE,
         username TEXT UNIQUE,
-        password_hash TEXT
+        password_hash TEXT,
+        verification_token TEXT,
+        is_verified INTEGER DEFAULT 0
     )
 `).run();
+
 
 module.exports = db;

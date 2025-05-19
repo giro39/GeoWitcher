@@ -6,8 +6,13 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const crypto = require('crypto');
 
-const JWT_SECRET = 'super_secret_i_wont_tell_you';
+const { sendVerificationEmail } = require('./mailer');
+
+require('dotenv').config();
+
+const JWT_SECRET = process.env.JWT_SECRET;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -25,12 +30,31 @@ app.post('/register', async (req, res) => {
     }
     try {
         const password_hash = await bcrypt.hash(password, 10);
-        const stmt = db.prepare('INSERT INTO users (email, username, password_hash) VALUES (?, ?, ?)');
-        stmt.run(email, username, password_hash);
-        res.status(201).json({ message: 'User registered!' });
+        const verification_token = crypto.randomBytes(32).toString('hex');
+        const stmt = db.prepare('INSERT INTO users (email, username, password_hash, verification_token) VALUES (?, ?, ?, ?)');
+        stmt.run(email, username, password_hash, verification_token);
+
+        await sendVerificationEmail(email, verification_token);
+
+        res.status(201).json({ message: 'User registered! Please check your email to verify your account.' });
     } catch (err) {
         res.status(400).json({ error: 'Email or username already exists.' });
     }
+});
+
+app.get('/verify', (req, res) => {
+    const { token } = req.query;
+    if (!token) {
+        return res.status(400).send('Verification token is required.');
+    }
+
+    const stmt = db.prepare('SELECT * FROM users WHERE verification_token = ?');
+    const user = stmt.get(token);
+    if (!user) {
+        return res.status(400).send('Invalid or expired verification token.');
+    }
+    db.prepare('UPDATE users SET is_verified = 1, verification_token = NULL WHERE id = ?').run(user.id);
+    res.send('Email verified successfully! You can now log in.');
 });
 
 app.post('/login', async (req, res) => {
@@ -54,11 +78,19 @@ app.post('/login', async (req, res) => {
         if (!valid) {
             return res.status(401).json({ error: 'Invalid credentials.' });
         }
+        if (!user.is_verified) {
+            return res.status(403).json({ error: 'Account not verified. Please check your email.' });
+        }
         const token = jwt.sign(
             { id: user.id, email: user.email, username: user.username },
             JWT_SECRET,
             { expiresIn: '1h' }
         );
+        res.cookie('token', token, { 
+            httpOnly: true,
+            // sameSite: 'lax',
+            secure: process.env.NODE_ENV === 'production',
+        });
         res.json({ token });
     } catch (err) {
         res.status(500).json({ error: 'Internal server error.' });
