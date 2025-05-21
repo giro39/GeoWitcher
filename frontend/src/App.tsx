@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Round from './pages/gamePages/Round/Round';
 
 // Auth pages
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import RegisterPage from './pages/authPages/registerPage/RegisterPage';
 import LoginPage from './pages/authPages/loginPage/LoginPage';
 
@@ -15,7 +16,7 @@ function App() {
             <Routes>
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
-                <Route path="/" element={<Round />} />
+                <Route path="/" element={<PrivateRoute><Round /></PrivateRoute>} />
             </Routes>
         </Router>
     )

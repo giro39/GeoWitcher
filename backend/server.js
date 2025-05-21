@@ -5,6 +5,7 @@ const port = 3000;
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const crypto = require('crypto');
 
@@ -14,8 +15,12 @@ require('dotenv').config();
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-app.use(cors());
+app.use(cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+}));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 const db = require('./db');
 
@@ -107,6 +112,18 @@ app.post('/login', async (req, res) => {
         res.json({ token });
     } catch (err) {
         res.status(500).json({ error: 'Internal server error.' });
+    }
+});
+
+app.get('/authcheck', (req, res) => {
+    const token = req.cookies.token;
+    if (!token) return res.sendStatus(401);
+
+    try {
+        jwt.verify(token, JWT_SECRET);
+        res.sendStatus(200);
+    } catch {
+        res.sendStatus(401);
     }
 });
 
