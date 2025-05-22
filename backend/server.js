@@ -117,13 +117,15 @@ app.post('/login', async (req, res) => {
 
 app.get('/authcheck', (req, res) => {
     const token = req.cookies.token;
-    if (!token) return res.sendStatus(401);
+    if (!token) {
+        return res.status(200).json({ isAuth: false });
+    }
 
     try {
         jwt.verify(token, JWT_SECRET);
-        res.sendStatus(200);
+        res.status(200).json({ isAuth: true });
     } catch {
-        res.sendStatus(401);
+        res.status(200).json({ isAuth: false });
     }
 });
 

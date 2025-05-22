@@ -5,7 +5,8 @@ import { setAuth } from "../../../store/authSlice";
 import { checkAuth } from "../../../utils/checkAuth";
 
 import Form from "../../../components/Form/Form";
-import AlreadyLoggedInPage from "../alreadyLoggedInPage/alreadyLoggedInPage";
+import AlreadyLoggedInPage from "../alreadyLoggedInPage/AlreadyLoggedInPage";
+import LoadingIcon from "../../../components/LoadingIcon/LoadingIcon";
 
 import styles from "./LoginPage.module.scss";
 
@@ -22,7 +23,7 @@ const LoginPage: React.FC = () => {
             dispatch(setAuth(auth));
             setLoading(false);
         })
-    })
+    }, [])
 
     const handleLogin = async (values: Record<string, string>) => {
         setMessage(null);
@@ -56,7 +57,7 @@ const LoginPage: React.FC = () => {
         }
     };
     
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <LoadingIcon />;
     if (isAuth) return <AlreadyLoggedInPage />;
     return (
         <div className={styles.loginContainer}>
