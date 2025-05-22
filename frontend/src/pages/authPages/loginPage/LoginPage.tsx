@@ -1,13 +1,28 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../store";
 import { setAuth } from "../../../store/authSlice";
+import { checkAuth } from "../../../utils/checkAuth";
+
 import Form from "../../../components/Form/Form";
+import AlreadyLoggedInPage from "../alreadyLoggedInPage/alreadyLoggedInPage";
 
 import styles from "./LoginPage.module.scss";
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
 const LoginPage: React.FC = () => {
     const dispatch = useDispatch();
+    const isAuth = useSelector((state: RootState) => state.auth.isAuth);
     const [message, setMessage] = useState<string | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        checkAuth().then((auth) => {
+            dispatch(setAuth(auth));
+            setLoading(false);
+        })
+    })
 
     const handleLogin = async (values: Record<string, string>) => {
         setMessage(null);
@@ -21,7 +36,7 @@ const LoginPage: React.FC = () => {
         }
 
         try {
-            const res = await fetch("http://localhost:3000/login", {
+            const res = await fetch(`${backendUrl}/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload),
@@ -40,7 +55,9 @@ const LoginPage: React.FC = () => {
             dispatch(setAuth(false));
         }
     };
-
+    
+    if (loading) return <div>Loading...</div>;
+    if (isAuth) return <AlreadyLoggedInPage />;
     return (
         <div className={styles.loginContainer}>
             <h2>Login</h2>

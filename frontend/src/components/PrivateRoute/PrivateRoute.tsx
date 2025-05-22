@@ -5,11 +5,13 @@ interface PrivateRouteProps {
     children: React.ReactNode;
 }
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
     const [isAuth, setIsAuth] = useState<null | boolean>(null)
 
     useEffect(() => {
-        fetch("http://localhost:3000/authcheck", {
+        fetch(`${backendUrl}/authcheck`, {
             credentials: "include",
         })
         .then(res => setIsAuth(res.ok))

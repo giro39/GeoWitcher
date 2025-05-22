@@ -1,8 +1,10 @@
 import { AppDispatch } from "../store";
 import { setAuth } from "../store/authSlice";
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
 export const handleLogout = async (dispatch: AppDispatch) => {
-    await fetch("http://localhost:3000/logout", {
+    await fetch(`${backendUrl}/logout`, {
         method: "GET",
         credentials: "include",
     });

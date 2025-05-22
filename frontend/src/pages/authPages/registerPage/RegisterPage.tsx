@@ -3,13 +3,15 @@ import Form from "../../../components/Form/Form";
 
 import styles from "./RegisterPage.module.scss";
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
 const RegisterPage: React.FC = () => {
     const [message, setMessage] = useState<string | null>(null);
 
     const handleRegister = async (values: Record<string, string>) => {
         setMessage(null);
         try {
-            const res = await fetch("http://localhost:3000/register", {
+            const res = await fetch(`${backendUrl}/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(values),
