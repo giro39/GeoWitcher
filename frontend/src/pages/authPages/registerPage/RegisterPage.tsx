@@ -27,7 +27,7 @@ const RegisterPage: React.FC = () => {
     const handleRegister = async (values: Record<string, string>) => {
         setMessage(null);
         try {
-            const res = await fetch(`${backendUrl}/register`, {
+            const res = await fetch(`${backendUrl}/api/auth/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(values),
