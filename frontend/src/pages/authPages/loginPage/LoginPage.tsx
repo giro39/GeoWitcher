@@ -1,9 +1,12 @@
-import { useState } from "react"
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setAuth } from "../../../store/authSlice";
 import Form from "../../../components/Form/Form";
 
 import styles from "./LoginPage.module.scss";
 
 const LoginPage: React.FC = () => {
+    const dispatch = useDispatch();
     const [message, setMessage] = useState<string | null>(null);
 
     const handleLogin = async (values: Record<string, string>) => {
@@ -26,12 +29,15 @@ const LoginPage: React.FC = () => {
             });
             const data = await res.json();
             if (res.ok) {
-                setMessage("Login successful! Token: " + data.token);
+                setMessage("Login successful!");
+                dispatch(setAuth(true));
             } else {
                 setMessage(data.error || "Login failed.");
+                dispatch(setAuth(false));
             }
         } catch {
             setMessage("Some error occured.");
+            dispatch(setAuth(false));
         }
     };
 

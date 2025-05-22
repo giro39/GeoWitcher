@@ -127,6 +127,15 @@ app.get('/authcheck', (req, res) => {
     }
 });
 
+app.get('/logout', (req, res) => {
+    res.clearCookie('token', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        // sameSite: 'lax',
+    });
+    res.json({ message: 'Logged out successfully.' });
+});
+
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });

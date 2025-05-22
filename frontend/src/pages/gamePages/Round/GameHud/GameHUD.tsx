@@ -1,5 +1,8 @@
 import React from "react";
 
+import { useDispatch } from "react-redux"; // delete
+import { handleLogout } from "../../../../utils/handleLogout"; // delete
+
 import styles from "./GameHUD.module.scss";
 
 interface GameHUDProps {
@@ -13,6 +16,7 @@ interface GameHUDProps {
 }
 
 const GameHUD: React.FC<GameHUDProps> = ({ mode, map, round, player1, scorePlayer1, player2, scorePlayer2 }) => {
+    const dispatch = useDispatch(); // delete
     return (
         <div className={styles.container}>
             <div className={styles.hudColumn}>
@@ -40,6 +44,7 @@ const GameHUD: React.FC<GameHUDProps> = ({ mode, map, round, player1, scorePlaye
                     </div>
                 }
             </div>
+            <button onClick={() => handleLogout(dispatch)}>Logout</button>
         </div>
     )
 };
