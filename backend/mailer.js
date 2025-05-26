@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 });
 
 async function sendVerificationEmail(to, token) {
-    const verificationUrl = `${process.env.BACKEND_URL}/verify?token=${token}`;
+    const verificationUrl = `${process.env.BACKEND_URL}/api/auth/verify?token=${token}`;
     await transporter.sendMail({
         from: process.env.SMTP_FROM,
         to,
@@ -28,4 +28,20 @@ async function sendVerificationEmail(to, token) {
     });
 }
 
-module.exports = { sendVerificationEmail };
+async function sendPasswordResetEmail(to, token) {
+    const resetUrl = `${process.env.FRONTEND_URL}/reset-password?token=${token}`;
+    await transporter.sendMail({
+        from: process.env.SMTP_FROM,
+        to,
+        subject: 'GeoWitcher - Reset your password',
+        html: `
+            <h1>Password Reset Request</h1>
+            <p>We received a request to reset your password. Click the link below to reset it:</p>
+            <p><a href="${resetUrl}">${resetUrl}</a></p>
+            <p>If you did not request this, please ignore this email.</p>
+            <p>Best regards,<br>Jan - The GeoWitcher Team</p>
+            `,
+    });
+}
+
+module.exports = { sendVerificationEmail, sendPasswordResetEmail };

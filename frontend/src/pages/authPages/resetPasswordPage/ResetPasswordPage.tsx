@@ -1,0 +1,45 @@
+import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import Form from "../../../components/Form/Form";
+
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+const ResetPasswordPage: React.FC = () => {
+    const [params] = useSearchParams();
+    const [message, setMessage] = useState<string | null>(null);
+
+    const token = params.get("token");
+
+    const handleReset = async (values: Record<string, string>) => {
+        setMessage(null);
+
+        try {
+            const res = await fetch(`${backendUrl}/api/auth/reset-password`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ token, password: values.password }),
+            });
+            const data = await res.json();
+            setMessage(data.message || data.error || "Something went wrong.");
+        } catch {
+            setMessage("Something went wrong.");
+        }
+    }
+
+    if (!token) return <div>Invalid or missing token.</div>;
+    
+    return (
+        <div>
+            <h2>Reset Password</h2>
+            <Form
+                fields={[{ name: "password", label: "New password", type: "password" }]}
+                onSubmit={handleReset}
+                submitLabel="Reset password"
+            />
+            {message && <div>{message}</div>}
+        </div>
+    )
+
+};
+
+export default ResetPasswordPage;

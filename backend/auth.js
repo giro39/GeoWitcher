@@ -3,8 +3,9 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
-const { sendVerificationEmail } = require('./mailer');
+const { sendVerificationEmail, sendPasswordResetEmail } = require('./mailer');
 const db = require('./db');
+const { error } = require('console');
 const JWT_SECRET = process.env.JWT_SECRET;
 
 router.post('/register', async (req, res) => {
@@ -116,5 +117,36 @@ router.get('/logout', (req, res) => {
     });
     res.json({ message: 'Logged out successfully.' });
 });
+
+router.post('/forgot-password', async (req, res) => {
+    const resetLinkSentMessage = "If the email exists, a reset link was sent. It can take up to few minutes.";
+
+    const { email } = req.body;
+    if (!email) return res.status(400).json({ error: 'Email required.' });
+
+    const user = db.prepare('SELECT * FROM users WHERE email = ?').get(email);
+    if (!user) return res.status(200).json({ message: resetLinkSentMessage });
+
+    const reset_token = crypto.randomBytes(32).toString('hex');
+    db.prepare('UPDATE users SET reset_token = ? WHERE id = ?').run(reset_token, user.id);
+
+    await sendPasswordResetEmail(email, reset_token);
+
+    res.status(200).json({ message: resetLinkSentMessage});
+});
+
+router.post('/reset-password', async (req, res) => {
+    const {token, password} = req.body;
+    if (!token || !password) return res.status(400).json({ error: "Token and new password required" });
+
+    const user = db.prepare("SELECT * FROM users WHERE reset_token = ?").get(token);
+    if (!user) return res.status(400).json({ error: "Invalid or expired token" });
+
+    const password_hash = await bcrypt.hash(password, 10);
+    db.prepare("UPDATE users SET password_hash = ?, reset_token = NULL WHERE id = ?").run(password_hash, user.id);
+
+    res.status(200).json({ message: "Password reset successful. You can log in now." });
+});
+
 
 module.exports = router;

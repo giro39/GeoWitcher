@@ -9,6 +9,7 @@ db.prepare(`
         username TEXT UNIQUE,
         password_hash TEXT,
         verification_token TEXT,
+        reset_token TEXT,
         is_verified INTEGER DEFAULT 0
     )
 `).run();
