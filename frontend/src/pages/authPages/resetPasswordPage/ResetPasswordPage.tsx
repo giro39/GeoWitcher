@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import Form from "../../../components/Form/Form";
+import Form from "../../../components/authComponents/Form/Form";
+import AuthHeader from "../../../components/authComponents/AuthHeader/AuthHeader";
+import AuthInfoBox from "../../../components/authComponents/authInfoBox/AuthInfoBox";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -30,13 +32,15 @@ const ResetPasswordPage: React.FC = () => {
     
     return (
         <div>
-            <h2>Reset Password</h2>
+            <AuthHeader 
+                title="Reset Password" 
+            />
             <Form
                 fields={[{ name: "password", label: "New password", type: "password" }]}
                 onSubmit={handleReset}
                 submitLabel="Reset password"
             />
-            {message && <div>{message}</div>}
+            {message && <AuthInfoBox message={message} />}
         </div>
     )
 

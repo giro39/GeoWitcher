@@ -1,5 +1,7 @@
 import { useState } from "react";
-import Form from "../../../components/Form/Form";
+import Form from "../../../components/authComponents/Form/Form";
+import AuthHeader from "../../../components/authComponents/AuthHeader/AuthHeader";
+import AuthInfoBox from "../../../components/authComponents/authInfoBox/AuthInfoBox";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -24,12 +26,16 @@ const ForgotPasswordPage: React.FC = () => {
     return (
         <div>
             <h2>Forgot Password</h2>
+            <AuthHeader 
+                title="Forgot Password" 
+            />
             <Form 
                 fields={[{ name: "email", label: "E-mail", type: "email" }]}
                 onSubmit={handleForgot}
                 submitLabel="Send reset link"
             />
-            {message && <div>{message}</div>}
+            
+            {message && <AuthInfoBox message={message} />}
         </div>
     );
 };

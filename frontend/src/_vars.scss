@@ -2,6 +2,7 @@
     --text-1: #ffffff;
     --text-2: #c0c1c1;
     --text-3: #aaaaaa;
+    --text-dark: #1a1818;
     --accent: rgb(45,33,66);
     --accent-darker: rgb(28, 21, 40);
     --accent-lighter: rgb(60, 55, 110);
@@ -9,15 +10,17 @@
     --background-1: #000000;
     --background-2: #18141f;
     --background-3: #25222b;
+    --background-light: #ece8f5;
     // --border-1: #3a3450;
     // --border-2: #5c5770;
-    // --error: #c01313;
+    --error: #c01313;
     --confirm-gradient: linear-gradient(0deg, rgba(78, 156, 66, 1) 0%, rgba(147, 228, 80, 1) 100%);
 }
 
 $text-1: var(--text-1);
 $text-2: var(--text-2);
 $text-3: var(--text-3);
+$text-dark: var(--text-dark);
 $accent: var(--accent);
 $accent-darker: var(--accent-darker);
 $accent-lighter: var(--accent-lighter);
@@ -25,4 +28,6 @@ $accent-gradient: var(--accent-gradient);
 $background1: var(--background-1);
 $background2: var(--background-2);
 $background3: var(--background-3);
+$background-light: var(--background-light);
+$error: var(--error);
 $confirmGradient: var(--confirm-gradient);

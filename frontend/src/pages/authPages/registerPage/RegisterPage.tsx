@@ -4,7 +4,9 @@ import { RootState } from "../../../store";
 import { setAuth } from "../../../store/authSlice";
 import { checkAuth } from "../../../utils/checkAuth";
 
-import Form from "../../../components/Form/Form";
+import Form from "../../../components/authComponents/Form/Form";
+import AuthHeader from "../../../components/authComponents/AuthHeader/AuthHeader";
+import AuthInfoBox from "../../../components/authComponents/authInfoBox/AuthInfoBox";
 import AlreadyLoggedInPage from "../alreadyLoggedInPage/AlreadyLoggedInPage";
 
 import styles from "./RegisterPage.module.scss";
@@ -47,7 +49,9 @@ const RegisterPage: React.FC = () => {
     if (isAuth) return <AlreadyLoggedInPage />
     return (
         <div className={styles.registerContainer}>
-            <h2>Register</h2>
+            <AuthHeader 
+                title="Register" 
+            />
             <Form
                 fields={[
                     { name: "email", label: "E-mail", type: "email" },
@@ -57,7 +61,7 @@ const RegisterPage: React.FC = () => {
                 onSubmit={handleRegister}
                 submitLabel="Register"
             />
-            {message && <div>{message}</div>}
+            {message && <AuthInfoBox message={message} />}
         </div>
     )
 }
