@@ -1,7 +1,7 @@
 @use "../../../../vars" as *;
 
 .container {
-    background: linear-gradient(0deg, rgba(57, 50, 115, 1) 0%, rgba(114, 108, 171, 1) 100%);
+    background: $accent-gradient;
     position: fixed;
     top: 1rem;
     right: 0rem;
