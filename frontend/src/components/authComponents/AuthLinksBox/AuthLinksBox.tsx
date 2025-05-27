@@ -11,7 +11,7 @@ const AuthLinksBox: React.FC<AuthLinksBoxProps> = ({ fields }) => {
     return (
         <div className={styles.authLinksBox}>
             {fields.map(field => (
-                <Link to={field.url} className={styles.singleLink}>{field.name}</Link>
+                <Link key={field.name} to={field.url} className={styles.singleLink}>{field.name}</Link>
             ))}
         </div>
     );

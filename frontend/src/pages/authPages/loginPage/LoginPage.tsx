@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { RootState } from "../../../store";
 import { setAuth } from "../../../store/authSlice";
 import { checkAuth } from "../../../utils/checkAuth";

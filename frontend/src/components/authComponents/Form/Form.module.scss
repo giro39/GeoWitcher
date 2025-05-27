@@ -48,3 +48,11 @@
         background: $accent-lighter;
     }
 }
+
+@media only screen and (max-width: 30rem) {
+    .formContainer {
+        padding: 1.2rem 1.4rem;
+        width: 95%;
+        max-width: 95%;
+    }
+}
