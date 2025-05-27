@@ -25,7 +25,6 @@ const ForgotPasswordPage: React.FC = () => {
 
     return (
         <div>
-            <h2>Forgot Password</h2>
             <AuthHeader 
                 title="Forgot Password" 
             />

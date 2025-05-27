@@ -25,7 +25,7 @@
 .formInput {
     padding: 0.35rem 1rem;
     border-radius: 0.6rem;
-    border: 2px solid $accent-lighter;
+    border: 2px solid $accent-light;
     background: $background-light;
     font-size: 1rem;
     color: $text-dark;
@@ -37,13 +37,14 @@
     padding: 0.8rem 1.2rem;
     border-radius: 2rem;
     border: none;
-    background: $confirmGradient;
+    background: $accent-light;
     color: $text-1;
     font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
+    transition: background 0.2s ease-in-out;
 
-    // &:hover, &:focus {
-        
-    // }
+    &:hover, &:focus {
+        background: $accent-lighter;
+    }
 }

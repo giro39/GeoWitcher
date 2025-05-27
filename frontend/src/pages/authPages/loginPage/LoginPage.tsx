@@ -8,6 +8,7 @@ import { checkAuth } from "../../../utils/checkAuth";
 import Form from "../../../components/authComponents/Form/Form";
 import AuthHeader from "../../../components/authComponents/AuthHeader/AuthHeader";
 import AuthInfoBox from "../../../components/authComponents/authInfoBox/AuthInfoBox";
+import AuthLinksBox from "../../../components/authComponents/AuthLinksBox/AuthLinksBox";
 import AlreadyLoggedInPage from "../alreadyLoggedInPage/AlreadyLoggedInPage";
 import LoadingIcon from "../../../components/LoadingIcon/LoadingIcon";
 
@@ -48,7 +49,6 @@ const LoginPage: React.FC = () => {
             });
             const data = await res.json();
             if (res.ok) {
-                setMessage("Login successful!");
                 dispatch(setAuth(true));
             } else {
                 setMessage(data.error || "Login failed.");
@@ -75,9 +75,12 @@ const LoginPage: React.FC = () => {
                 onSubmit={handleLogin}
                 submitLabel="Login"
             />
-            <div>
-                <Link to="/forgot-password">Forgot password?</Link>
-            </div>
+            <AuthLinksBox
+                fields={[
+                    { name: "Forgot password?", url: "/forgot-password" },
+                    { name: "Don't have an account? Register here", url: "/register" },
+                ]}
+            />
             {message && <AuthInfoBox message={message} />}
         </div>
     );

@@ -6,6 +6,7 @@
     --accent: rgb(45,33,66);
     --accent-darker: rgb(28, 21, 40);
     --accent-lighter: rgb(60, 55, 110);
+    --accent-light: rgb(100, 110, 196);
     --accent-gradient: linear-gradient(0deg, rgb(40,30,60) 0%, rgb(60, 55, 110) 100%);
     --background-1: #000000;
     --background-2: #18141f;
@@ -24,6 +25,7 @@ $text-dark: var(--text-dark);
 $accent: var(--accent);
 $accent-darker: var(--accent-darker);
 $accent-lighter: var(--accent-lighter);
+$accent-light: var(--accent-light);
 $accent-gradient: var(--accent-gradient);
 $background1: var(--background-1);
 $background2: var(--background-2);
