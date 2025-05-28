@@ -1,0 +1,58 @@
+@use "../../../vars" as *;
+
+.formContainer {
+    background: color-mix(in srgb, $background3 50%, transparent);
+    padding: 2rem 2.5rem;
+    border-radius: 1.2rem;
+    box-shadow: 0 4px 32px rgba($color: #000000, $alpha: 0.25);
+
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    min-width: 20rem;
+    max-width: 30rem;
+    margin: 1rem auto;
+}
+
+.inputLabel {
+    color: $text-1;
+    font-size: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.formInput {
+    padding: 0.35rem 1rem;
+    border-radius: 0.6rem;
+    border: 2px solid $accent-light;
+    background: $background-light;
+    font-size: 1rem;
+    color: $text-dark;
+}
+// we could do some nice things on valid but now there is no time for this
+
+.formSubmit {
+    margin-top: 0.5rem;
+    padding: 0.8rem 1.2rem;
+    border-radius: 2rem;
+    border: none;
+    background: $accent-light;
+    color: $text-1;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+
+    &:hover, &:focus {
+        background: $accent-lighter;
+    }
+}
+
+@media only screen and (max-width: 30rem) {
+    .formContainer {
+        padding: 1.2rem 1.4rem;
+        width: 95%;
+        max-width: 95%;
+    }
+}

@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import styles from "./Form.module.scss";
+
 interface FormProps {
     fields: { name: string; label: string; type?: string }[];
     onSubmit: (data: { [key: string]: string }) => void;
@@ -21,10 +23,10 @@ const Form: React.FC<FormProps> = ({ fields, onSubmit, submitLabel }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={styles.formContainer}>
             {fields.map(field => (
                 <div key={field.name}>
-                    <label>
+                    <label className={styles.inputLabel}>
                         {field.label}
                         <input
                             type={field.type || "text"}
@@ -32,12 +34,13 @@ const Form: React.FC<FormProps> = ({ fields, onSubmit, submitLabel }) => {
                             value={values[field.name] || ""}
                             onChange={handleChange}
                             required
+                            className={styles.formInput}
                         />
                     </label>
                 </div>
             ))}
             {error && <div>{error}</div>}
-            <button type="submit">{submitLabel}</button>
+            <button type="submit" className={styles.formSubmit}>{submitLabel}</button>
         </form>
     )
 }

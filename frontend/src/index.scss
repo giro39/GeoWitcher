@@ -15,6 +15,31 @@ body {
     background-color: black;
     line-height: 1.4;
     -webkit-font-smoothing: antialiased;
+
+    min-height: 100vh;
+    min-width: 100vw;
+    position: relative;
+    overflow-x: hidden;
+
+    &::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        background: url("/background/witchers_background.jpg") center center / cover no-repeat;
+        filter: brightness(0.4) blur(2px) grayscale(0.2) contrast(1.05);
+        transition: filter 0.3s;
+    }
+
+    &::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        background: radial-gradient(ellipse at 50% 50%, rgba(40,30,60,0.6) 0%, rgba(0,0,0,0.85) 100%);
+        pointer-events: none;
+        mix-blend-mode: multiply;
+    }
 }
 
 input,
