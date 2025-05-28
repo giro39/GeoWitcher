@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import Form from "../../../components/authComponents/Form/Form";
 import AuthHeader from "../../../components/authComponents/AuthHeader/AuthHeader";
 import AuthInfoBox from "../../../components/authComponents/authInfoBox/AuthInfoBox";
+import AuthLinksBox from "../../../components/authComponents/AuthLinksBox/AuthLinksBox";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -41,6 +42,11 @@ const ResetPasswordPage: React.FC = () => {
                 submitLabel="Reset password"
             />
             {message && <AuthInfoBox message={message} />}
+            <AuthLinksBox 
+                fields={[
+                    { name: "Back to login", url: "/login" },
+                ]}
+            />
         </div>
     )
 
