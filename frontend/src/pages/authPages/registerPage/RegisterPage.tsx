@@ -27,8 +27,36 @@ const RegisterPage: React.FC = () => {
         })
     }, [])
 
+    const validateForm = (values: Record<string, string>) => {
+        const validationErrors: string[] = [];
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(values.email)) {
+            validationErrors.push("Please enter a valid email address.")
+        }
+
+        const usernameRegex = /^[a-zA-Z0-9_]{4,20}$/;
+        if (!usernameRegex.test(values.username)) {
+            validationErrors.push("Username must be 3-20 characters and contain only letters, numbers, and underscores.")
+        }
+
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+        if (!passwordRegex.test(values.password)) {
+            validationErrors.push("Password must be at least 8 characters long, include uppercase, lowercase, and a number.")
+        }
+
+        return validationErrors;
+    }
+
     const handleRegister = async (values: Record<string, string>) => {
         setMessage(null);
+
+        const validationErrors = validateForm(values);
+        if (validationErrors.length > 0) {
+            setMessage(validationErrors.join(" "));
+            return;
+        }
+
         try {
             const res = await fetch(`${backendUrl}/api/auth/register`, {
                 method: "POST",

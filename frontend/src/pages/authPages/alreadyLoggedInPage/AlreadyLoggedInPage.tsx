@@ -6,7 +6,7 @@ const AlreadyLoggedInPage: React.FC = () => {
 
     return (
         <div>
-            <h2>You are already logged in!</h2>
+            <h2 style={{color: "white"}}>You are already logged in!</h2>
             <p>Do you want to log out?</p>
             <button onClick={() => handleLogout(dispatch)}>Logout</button>
         </div>
