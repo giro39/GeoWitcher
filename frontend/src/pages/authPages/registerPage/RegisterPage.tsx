@@ -4,6 +4,8 @@ import { RootState } from "../../../store";
 import { setAuth } from "../../../store/authSlice";
 import { checkAuth } from "../../../utils/checkAuth";
 
+import { usePasswordVisibility } from "../../../hooks/usePasswordVisibility"; 
+
 import Form from "../../../components/authComponents/Form/Form";
 import AuthHeader from "../../../components/authComponents/AuthHeader/AuthHeader";
 import AuthInfoBox from "../../../components/authComponents/authInfoBox/AuthInfoBox";
@@ -19,13 +21,15 @@ const RegisterPage: React.FC = () => {
     const isAuth = useSelector((state: RootState) => state.auth.isAuth);
     const [message, setMessage] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
+    const { togglePasswordVisibility, eyeIcon, inputType, ariaLabel, buttonStyles } = usePasswordVisibility();
 
     useEffect(() => {
         checkAuth().then((auth) => {
             dispatch(setAuth(auth));
             setLoading(false);
         })
-    }, [])
+    }, []);
+
 
     const validateForm = (values: Record<string, string>) => {
         const validationErrors: string[] = [];
@@ -85,7 +89,19 @@ const RegisterPage: React.FC = () => {
                 fields={[
                     { name: "email", label: "E-mail", type: "email" },
                     { name: "username", label: "Username", type: "text" },
-                    { name: "password", label: "Password", type: "password" },
+                    { name: "password", label: "Password", type: inputType,
+                        endAdornment: (
+                            <button 
+                                type="button" 
+                                onClick={togglePasswordVisibility} 
+                                className={styles.passwordToggle}
+                                style={buttonStyles}
+                                aria-label={ariaLabel}
+                            >
+                                {eyeIcon}
+                            </button>
+                        )
+                    },
                 ]}
                 onSubmit={handleRegister}
                 submitLabel="Register"

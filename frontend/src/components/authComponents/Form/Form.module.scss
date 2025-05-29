@@ -9,7 +9,7 @@
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
-    min-width: 20rem;
+    min-width: 12rem;
     max-width: 30rem;
     margin: 1rem auto;
 }
@@ -22,15 +22,36 @@
     gap: 0.25rem;
 }
 
+.inputWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
 .formInput {
+    width: 100%;
     padding: 0.35rem 1rem;
     border-radius: 0.6rem;
     border: 2px solid $accent-light;
     background: $background-light;
     font-size: 1rem;
     color: $text-dark;
+
+    &.hasAdornment {
+        padding-right: 0.5rem;
+    }
 }
 // we could do some nice things on valid but now there is no time for this
+
+.adornmentContainer {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+}
 
 .formSubmit {
     margin-top: 0.5rem;

@@ -3,7 +3,7 @@ import { useState } from "react";
 import styles from "./Form.module.scss";
 
 interface FormProps {
-    fields: { name: string; label: string; type?: string }[];
+    fields: { name: string; label: string; type?: string, endAdornment?: React.ReactNode }[];
     onSubmit: (data: { [key: string]: string }) => void;
     submitLabel: string;
 }
@@ -28,18 +28,25 @@ const Form: React.FC<FormProps> = ({ fields, onSubmit, submitLabel }) => {
                 <div key={field.name}>
                     <label className={styles.inputLabel}>
                         {field.label}
-                        <input
-                            type={field.type || "text"}
-                            name={field.name}
-                            value={values[field.name] || ""}
-                            onChange={handleChange}
-                            required
-                            className={styles.formInput}
-                        />
+                        <div className={styles.inputWrapper}>
+                            <input
+                                type={field.type || "text"}
+                                name={field.name}
+                                value={values[field.name] || ""}
+                                onChange={handleChange}
+                                required
+                                className={`${styles.formInput} ${field.endAdornment ? styles.hasAdornment : ''}`}
+                            />
+                            {field.endAdornment && (
+                                <div className={styles.adornmentContainer}>
+                                    {field.endAdornment}
+                                </div>
+                            )}
+                        </div>
                     </label>
                 </div>
             ))}
-            {error && <div>{error}</div>}
+            {error && <div className={styles.errorMessage}>{error}</div>}
             <button type="submit" className={styles.formSubmit}>{submitLabel}</button>
         </form>
     )

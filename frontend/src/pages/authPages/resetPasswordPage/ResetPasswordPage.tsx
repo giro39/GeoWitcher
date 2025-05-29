@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
+
+import { usePasswordVisibility } from "../../../hooks/usePasswordVisibility"; 
+
 import Form from "../../../components/authComponents/Form/Form";
 import AuthHeader from "../../../components/authComponents/AuthHeader/AuthHeader";
 import AuthInfoBox from "../../../components/authComponents/authInfoBox/AuthInfoBox";
@@ -10,6 +13,8 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
 const ResetPasswordPage: React.FC = () => {
     const [params] = useSearchParams();
     const [message, setMessage] = useState<string | null>(null);
+    const { togglePasswordVisibility, eyeIcon, inputType, ariaLabel, buttonStyles } = usePasswordVisibility();
+    
 
     const token = params.get("token");
 
@@ -37,7 +42,18 @@ const ResetPasswordPage: React.FC = () => {
                 title="Reset Password" 
             />
             <Form
-                fields={[{ name: "password", label: "New password", type: "password" }]}
+                fields={[{ name: "password", label: "New password", type: inputType,
+                    endAdornment: (
+                            <button
+                                type="button"
+                                onClick={togglePasswordVisibility}
+                                style={buttonStyles}
+                                aria-label={ariaLabel}
+                            >
+                                {eyeIcon}
+                            </button>
+                        )
+                 }]}
                 onSubmit={handleReset}
                 submitLabel="Reset password"
             />
