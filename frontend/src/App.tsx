@@ -1,5 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+// Website Pages
+import Main from "./pages/websitePages/Main/Main";
+
 // import Map from './components/Map/Map'
 import Round from './pages/gamePages/Round/Round';
 
@@ -20,7 +23,7 @@ function App() {
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="forgot-password" element={<ForgotPasswordPage />}/>
                 <Route path="reset-password" element={<ResetPasswordPage />}/>
-                <Route path="/" element={<PrivateRoute><Round /></PrivateRoute>} />
+                <Route path="/" element={<PrivateRoute><Main /></PrivateRoute>} />
             </Routes>
         </Router>
     )
