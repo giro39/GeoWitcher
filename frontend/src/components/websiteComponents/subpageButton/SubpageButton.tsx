@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import styles from "./SubpageButton.module.scss";
 
 interface SubpageButtonProps {
@@ -8,10 +10,10 @@ interface SubpageButtonProps {
 
 const SubpageButton: React.FC<SubpageButtonProps> = ({ text, image, url }) => {
     return (
-    <div className={styles.mainContainer}>
-      <h3>{text}</h3>
-      <h3>{image}</h3>
-      <h3>{url}</h3>
+    <div className={styles.linkContainer} key={text} style={{ backgroundImage: `url(${image})` }}>
+        <Link to={url} className={styles.link}>
+            <h3>{text}</h3>
+        </Link>
     </div>
   );
 };

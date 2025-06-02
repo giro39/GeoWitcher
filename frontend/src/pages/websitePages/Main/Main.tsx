@@ -1,14 +1,30 @@
-import SubpageButton from "../../../components/websiteComponents/subpageButton/subpageButton";
+import SubpageButton from "../../../components/websiteComponents/SubpageButton/SubpageButton";
 
 import styles from "./Main.module.scss"
 
 const Main: React.FC = () => {
     return (
     <main className={styles.mainContainer}>
-        <h1>Main Page</h1>
+        <div className={styles.leftContainer}>
+            <SubpageButton 
+                text="Welcome to GeoWitcher"
+                image="buttonImages/WhiteFrost.png"
+                url="url"
+            />
+            <SubpageButton 
+                text="Profile"
+                image="buttonImages/ElvenBlade.png"
+                url="url"
+            />
+        </div>
         <SubpageButton 
-            text="Text"
-            image="image"
+            text="Singleplayer"
+            image="buttonImages/Milaen.png"
+            url="url"
+        />
+        <SubpageButton 
+            text="Duel"
+            image="buttonImages/PrinceAnseis.png"
             url="url"
         />
     </main>
