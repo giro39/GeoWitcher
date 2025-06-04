@@ -9,23 +9,23 @@ const Main: React.FC = () => {
             <SubpageButton 
                 text="Welcome to GeoWitcher"
                 image="buttonImages/WhiteFrost.png"
-                url="url"
+                url="about"
             />
             <SubpageButton 
                 text="Profile"
                 image="buttonImages/ElvenBlade.png"
-                url="url"
+                url="profile"
             />
         </div>
         <SubpageButton 
             text="Singleplayer"
             image="buttonImages/Milaen.png"
-            url="url"
+            url="singleplayer"
         />
         <SubpageButton 
             text="Duel"
             image="buttonImages/PrinceAnseis.png"
-            url="url"
+            url="duel"
         />
     </main>
     );
