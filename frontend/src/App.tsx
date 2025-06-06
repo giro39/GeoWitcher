@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Main from "./pages/websitePages/Main/Main";
 
 // import Map from './components/Map/Map'
-// import Round from './pages/gamePages/Round/Round';
+import Round from './pages/gamePages/Round/Round';
 
 // Auth pages
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
@@ -34,6 +34,7 @@ function App() {
                 <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
                 <Route path="/singleplayer" element={<PrivateRoute><Singleplayer /></PrivateRoute>} />
                 <Route path="/duel" element={<PrivateRoute><Duel /></PrivateRoute>} />
+                <Route path="/round-temp" element={<PrivateRoute><Round /></PrivateRoute>} />
                 <Route path="/" element={<PrivateRoute><Main /></PrivateRoute>} />
             </Routes>
         </Router>

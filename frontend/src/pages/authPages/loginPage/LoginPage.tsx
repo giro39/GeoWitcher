@@ -8,7 +8,7 @@ import { usePasswordVisibility } from "../../../hooks/usePasswordVisibility";
 
 import Form from "../../../components/authComponents/Form/Form";
 import AuthHeader from "../../../components/authComponents/AuthHeader/AuthHeader";
-import AuthInfoBox from "../../../components/authComponents/authInfoBox/AuthInfoBox";
+import AuthInfoBox from "../../../components/authComponents/AuthInfoBox/AuthInfoBox";
 import AuthLinksBox from "../../../components/authComponents/AuthLinksBox/AuthLinksBox";
 import AlreadyLoggedInPage from "../alreadyLoggedInPage/AlreadyLoggedInPage";
 import LoadingIcon from "../../../components/LoadingIcon/LoadingIcon";
