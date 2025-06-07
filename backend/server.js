@@ -10,6 +10,8 @@ const http = require('http');
 const authRouter = require('./auth');
 const roomsRouter = require('./rooms');
 
+const authenticateToken = require('./jwtMiddleware');
+
 require('dotenv').config();
 
 const server = http.createServer(app);
@@ -33,6 +35,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use('/api/auth', authRouter);
+app.use('/api/rooms', roomsRouter);
 
 server.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);

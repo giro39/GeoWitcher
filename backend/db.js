@@ -78,6 +78,10 @@ db.prepare(`
     )
 `).run();
 
-
+const createWhiteOrchardMap = db.prepare(`
+  INSERT OR IGNORE INTO maps (id_map, name, image) 
+  VALUES (0, 'White Orchard', 'white_orchard.jpg')
+`);
+createWhiteOrchardMap.run();
 
 module.exports = db;

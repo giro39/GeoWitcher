@@ -43,7 +43,7 @@ router.get('/verify', (req, res) => {
     const tokenAfterVerify = jwt.sign(
         { id: user.id, email: user.email, username: user.username },
         JWT_SECRET,
-        { expiresIn: '1h' }
+        { expiresIn: '24h' }
     );
         res.cookie('token', tokenAfterVerify, {
         httpOnly: true,
@@ -82,7 +82,7 @@ router.post('/login', async (req, res) => {
         const token = jwt.sign(
             { id: user.id, email: user.email, username: user.username },
             JWT_SECRET,
-            { expiresIn: '1h' }
+            { expiresIn: '24h' }
         );
         res.cookie('token', token, { 
             httpOnly: true,

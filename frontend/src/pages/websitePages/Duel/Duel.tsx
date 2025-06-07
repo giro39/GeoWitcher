@@ -19,6 +19,15 @@ const Duel: React.FC = () => {
         socket.on("connect", () => {
             setSocketConnected(true);
             console.log("Połączono z WebSocketem!", socket.id);
+
+            fetch(`${backendUrl}/api/rooms/create`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({ mode: "Duel" }),
+            })
+            .then(res => res.json())
+            .then()
         });
 
         // remember to disconnect later
