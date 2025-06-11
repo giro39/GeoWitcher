@@ -53,4 +53,38 @@ router.post('/create', authenticateToken, (req, res) => {
 });
 
 
+router.post('/join', authenticateToken, (req, res) => {
+    const { roomId } = req.body;
+    const user = req.user;
+
+    const room = db.prepare('SELECT * FROM rooms WHERE id_room = ?').get(roomId);
+    if (!room) {
+        return res.status(404).json({ error: "Room not found" });
+    }
+
+    const userCount = db.prepare('SELECT COUNT(*) as count FROM users_rooms WHERE id_room = ?').get(roomId).count;
+    if (userCount >= 2) {
+        return res.status(400).json({ error: "Room is full (max 2 players)" });
+    }
+
+    const userInRoom = db.prepare('SELECT * FROM users_rooms WHERE id_room = ? AND id_user = ?').get(roomId, user.id);
+    if (userInRoom) {
+        return res.status(400).json({ error: "User already is in this room" });
+    }
+
+    const stmt = db.prepare('INSERT INTO users_rooms (id_room, id_user, health) VALUES (?, ?, ?)');
+    stmt.run(roomId, user.id, 6000);
+
+    // update token as in creation of the room
+    const updatedUser = { ...user, roomId };
+    const token = jwt.sign(updatedUser, process.env.JWT_SECRET);
+
+    res.cookie('token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+    });
+
+    return res.status(200).json({ message: "Joined room", roomId });
+})
+
 module.exports = router;
