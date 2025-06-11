@@ -19,6 +19,7 @@ router.post('/create', authenticateToken, (req, res) => {
                 ?, 0, 0, 0
             )
         `);
+        
         const roomAddResult = stmtRoom.run(mode);
         console.log(roomAddResult); // delete this later
         const roomId = roomAddResult.lastInsertRowid;

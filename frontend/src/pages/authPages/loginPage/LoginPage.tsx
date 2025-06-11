@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { RootState } from "../../../store";
 import { setAuth } from "../../../store/authSlice";
 import { checkAuth } from "../../../utils/checkAuth";
@@ -20,6 +21,7 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
 const LoginPage: React.FC = () => {
     const dispatch = useDispatch();
     const isAuth = useSelector((state: RootState) => state.auth.isAuth);
+    const navigate = useNavigate(); 
     const [message, setMessage] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
     const { togglePasswordVisibility, eyeIcon, inputType, ariaLabel, buttonStyles } = usePasswordVisibility();
@@ -53,6 +55,7 @@ const LoginPage: React.FC = () => {
             const data = await res.json();
             if (res.ok) {
                 dispatch(setAuth(true));
+                navigate("/");
             } else {
                 setMessage(data.error || "Login failed.");
                 dispatch(setAuth(false));
